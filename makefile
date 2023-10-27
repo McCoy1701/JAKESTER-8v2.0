@@ -1,5 +1,6 @@
 CC = gcc
 
+CINC = -Iinclude
 CFLAGS = -lwiringPi -lwiringPiDev
 
 SRC_DIR = src
@@ -10,9 +11,15 @@ BIN_DIR = bin
 
 all: $(BIN_DIR)
 
-$(BIN_DIR): always
+$(OBJ_DIR)/keypad.o: $(SRC_DIR)/keypad/keypad.c
+	$(CC) $< -c $(CINC) -o $@
+
+$(OBJ_DIR)/main.o: $(SRC_DIR)/main.c
+	$(CC) $< -c $(CINC) -o $@
+
+$(BIN_DIR): always $(OBJ_DIR)/keypad.o $(OBJ_DIR)/main.o
 	mkdir -p $(BIN_DIR)
-	$(CC) $(SRC_DIR)/main.c $(CFLAGS) -o $(BIN_DIR)/$@
+	$(CC) $(OBJ_DIR)/keypad.o $(OBJ_DIR)/main.o $(CFLAGS) -o $(BIN_DIR)/$@
 
 clean:
 	rm -rf $(BIN_DIR) $(OBJ_DIR)
