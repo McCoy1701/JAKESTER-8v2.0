@@ -1,6 +1,6 @@
 CC = gcc
 CINC = -Iinclude
-CFLAGS = -lJakestering
+CFLAGS = -g -lJakestering
 
 SRC_DIR = src
 OBJ_DIR = obj
